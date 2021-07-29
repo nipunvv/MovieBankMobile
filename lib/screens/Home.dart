@@ -19,6 +19,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late Future<List<Movie>> popularMovies;
   late Future<List<Movie>> latestMovies;
+  final double dividerIndent = 10;
 
   Future<List<Movie>> fetchMovies(String type) async {
     String url =
@@ -50,74 +51,65 @@ class _HomeState extends State<Home> {
   }
 
   Widget showMovies(String type) {
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: MediaQuery.of(context).size.height * 0.4,
-      ),
-      child: FutureBuilder<List<Movie>>(
-        future: type == 'popular' ? popularMovies : latestMovies,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<Movie>? movies = snapshot.data;
-            return CarouselSlider(
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height * 0.4,
-                viewportFraction: 0.6,
-                enlargeCenterPage: false,
-                disableCenter: true,
-                aspectRatio: 16 / 9,
-                initialPage: 0,
-                enableInfiniteScroll: false,
-              ),
-              items: movies!.map((item) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        left: 5,
-                        right: 5,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: InkWell(
-                          onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => MovieDetail(
-                            //       item,
-                            //     ),
-                            //   ),
-                            // );
-                          },
-                          child: Hero(
-                            tag: 'movie_image${item.id}',
-                            child: CachedNetworkImage(
-                              imageUrl: "$TMDB_WEB_URL/w342/${item.posterPath}",
-                              fit: BoxFit.cover,
+    return Expanded(
+      child: Container(
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height * 0.4,
+        ),
+        width: MediaQuery.of(context).size.width,
+        child: SizedBox(
+          width: double.infinity,
+          child: FutureBuilder<List<Movie>>(
+            future: type == 'popular' ? popularMovies : latestMovies,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                List<Movie>? movies = snapshot.data ?? [];
+                return ListView.separated(
+                    physics: PageScrollPhysics(),
+                    separatorBuilder: (context, index) => Divider(
+                          indent: dividerIndent,
+                        ),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: movies.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          left: 5,
+                          right: 5,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: InkWell(
+                            onTap: () {},
+                            child: Hero(
+                              tag: 'movie_image${movies[index].id}',
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    "$TMDB_WEB_URL/w342/${movies[index].posterPath}",
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
+                      );
+                    });
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
 
-          return SizedBox(
-            height: 100,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            ),
-          );
-        },
+              return SizedBox(
+                height: 100,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
