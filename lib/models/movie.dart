@@ -9,6 +9,7 @@ class Movie {
   final dynamic voteCount;
   final String releaseDate;
   dynamic genreIds;
+  String category;
 
   Movie({
     required this.id,
@@ -21,20 +22,21 @@ class Movie {
     required this.voteCount,
     required this.releaseDate,
     required this.genreIds,
+    required this.category,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
-      id: json['id'],
-      language: json['original_language'],
-      title: json['original_title'],
-      overview: json['overview'] ?? '',
-      posterPath: json['poster_path'] ?? '',
-      backDropPath: json['backdrop_path'] ?? '',
-      voteAvg: json['vote_average'],
-      voteCount: json['vote_count'],
-      releaseDate: json['release_date'] ?? '',
-      genreIds: json['genre_ids'],
-    );
+        id: json['id'],
+        language: json['original_language'],
+        title: json['original_title'],
+        overview: json['overview'] ?? '',
+        posterPath: json['poster_path'] ?? '',
+        backDropPath: json['backdrop_path'] ?? '',
+        voteAvg: json['vote_average'],
+        voteCount: json['vote_count'],
+        releaseDate: json['release_date'] ?? '',
+        genreIds: json['genre_ids'],
+        category: json['category'] ?? '');
   }
 }

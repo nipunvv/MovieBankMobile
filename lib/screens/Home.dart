@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_bank_mobile/screens/movie_detail.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -33,6 +34,7 @@ class _HomeState extends State<Home> {
       List<Movie> movies = [];
       Movie m;
       for (Map<String, dynamic> movie in jsonDecode(response.body)['results']) {
+        movie['category'] = type;
         m = Movie.fromJson(movie);
         if (m.releaseDate != '') movies.add(m);
       }
@@ -81,12 +83,22 @@ class _HomeState extends State<Home> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MovieDetail(
+                                    movie: movies[index],
+                                  ),
+                                ),
+                              );
+                            },
                             child: Hero(
-                              tag: 'movie_image${movies[index].id}',
+                              tag:
+                                  'movie_image_${movies[index].category}_${movies[index].id}',
                               child: CachedNetworkImage(
                                 imageUrl:
-                                    "$TMDB_WEB_URL/w342/${movies[index].posterPath}",
+                                    "$TMDB_WEB_URL/w342${movies[index].posterPath}",
                                 fit: BoxFit.cover,
                               ),
                             ),
