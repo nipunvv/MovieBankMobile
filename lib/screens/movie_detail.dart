@@ -35,7 +35,7 @@ class _MovieDetailState extends State<MovieDetail> {
             Container(
               margin: EdgeInsets.only(
                   top: MediaQuery.of(context).size.height * 0.3),
-              height: MediaQuery.of(context).size.height * 0.35,
+              height: MediaQuery.of(context).size.height * 0.4,
               decoration: BoxDecoration(
                 color: Colors.white,
                 gradient: LinearGradient(
@@ -63,14 +63,20 @@ class _MovieDetailState extends State<MovieDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.movie.title,
-                    style: GoogleFonts.barlowCondensed(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white.withOpacity(.85),
-                      letterSpacing: 2,
-                      fontSize: 35,
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      widget.movie.title,
+                      style: GoogleFonts.barlowCondensed(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white.withOpacity(.85),
+                        letterSpacing: 2,
+                        fontSize: 35,
+                      ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 5,
                   ),
                   GenreList(genreIds: widget.movie.genreIds),
                   SizedBox(
