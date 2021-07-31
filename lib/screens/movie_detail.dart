@@ -34,6 +34,21 @@ class _MovieDetailState extends State<MovieDetail> {
             ),
           ),
           Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              gradient: LinearGradient(
+                begin: FractionalOffset.topCenter,
+                end: FractionalOffset.bottomCenter,
+                colors: [
+                  Colors.grey.withOpacity(0.0),
+                  Colors.white70,
+                ],
+                stops: [0.0, 1.0],
+              ),
+            ),
+          ),
+          Container(
             margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.5,
             ),
