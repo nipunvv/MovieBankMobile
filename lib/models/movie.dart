@@ -8,6 +8,7 @@ class Movie {
   final dynamic voteAvg;
   final dynamic voteCount;
   final String releaseDate;
+  final int runtime;
   dynamic genreIds;
   String category;
 
@@ -21,6 +22,7 @@ class Movie {
     required this.voteAvg,
     required this.voteCount,
     required this.releaseDate,
+    required this.runtime,
     required this.genreIds,
     required this.category,
   });
@@ -36,6 +38,7 @@ class Movie {
         voteAvg: json['vote_average'],
         voteCount: json['vote_count'],
         releaseDate: json['release_date'] ?? '',
+        runtime: json['runtime'] ?? 0,
         genreIds: json['genre_ids'],
         category: json['category'] ?? '');
   }
