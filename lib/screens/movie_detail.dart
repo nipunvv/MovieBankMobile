@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:movie_bank_mobile/widgets/genre_list.dart';
-import 'package:movie_bank_mobile/widgets/movie_header_item.dart';
+import 'package:movie_bank_mobile/widgets/movie_header.dart';
 
 class MovieDetail extends StatefulWidget {
   final Movie movie;
@@ -55,6 +55,30 @@ class _MovieDetailState extends State<MovieDetail> {
               ),
               color: Color(0xff1a1a24),
               height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: 30,
+                    ),
+                    padding: EdgeInsets.all(
+                      10,
+                    ),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "$TMDB_WEB_URL/w342${widget.movie.posterPath}",
+                            width: MediaQuery.of(context).size.width * 0.35,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
             Container(
               margin: EdgeInsets.only(
@@ -82,40 +106,7 @@ class _MovieDetailState extends State<MovieDetail> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.12,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black54,
-                          blurRadius: 15.0,
-                          offset: Offset(0.0, 5),
-                        ),
-                      ],
-                      color: Color(0xff323143),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        MovieHeaderItem(
-                          icon: Icons.calendar_today,
-                          text: '2021',
-                        ),
-                        MovieHeaderItem(
-                          icon: Icons.language,
-                          text: 'en',
-                        ),
-                        MovieHeaderItem(
-                          icon: Icons.star,
-                          text: '6.9',
-                        ),
-                      ],
-                    ),
-                  ),
+                  MovieHeader(),
                 ],
               ),
             ),
