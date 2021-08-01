@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
+import 'package:movie_bank_mobile/widgets/cast_list.dart';
 import 'package:movie_bank_mobile/widgets/genre_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_header.dart';
 import 'package:http/http.dart' as http;
@@ -245,6 +246,18 @@ class _MovieDetailState extends State<MovieDetail> {
                     ),
                   ),
                   Synopsis(synopsis: widget.movie.overview),
+                  FutureBuilder<List<Cast>>(
+                    future: cast,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Cast> cast = snapshot.data ?? [];
+                        return CastList(
+                          cast: cast,
+                        );
+                      }
+                      return Text('');
+                    },
+                  ),
                 ],
               ),
             ),
