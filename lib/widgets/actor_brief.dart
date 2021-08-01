@@ -4,6 +4,7 @@ import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
 import 'package:movie_bank_mobile/models/credit.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
+import 'package:movie_bank_mobile/screens/actor_detail.dart';
 
 class ActorBrief extends StatelessWidget {
   final Cast actor;
@@ -110,13 +111,13 @@ class ActorBrief extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                // Navigator.pop(context);
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => ActorDetail(actor.id),
-                //   ),
-                // );
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ActorDetail(actorId: actor.id),
+                  ),
+                );
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(
