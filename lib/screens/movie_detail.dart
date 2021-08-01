@@ -11,6 +11,7 @@ import 'package:movie_bank_mobile/widgets/genre_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_header.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/widgets/movie_meta.dart';
+import 'package:movie_bank_mobile/widgets/synopsis.dart';
 
 class MovieDetail extends StatefulWidget {
   final Movie movie;
@@ -242,7 +243,8 @@ class _MovieDetailState extends State<MovieDetail> {
                         )
                       ],
                     ),
-                  )
+                  ),
+                  Synopsis(synopsis: widget.movie.overview),
                 ],
               ),
             ),
