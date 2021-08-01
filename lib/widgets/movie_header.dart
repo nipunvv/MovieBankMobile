@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:movie_bank_mobile/widgets/movie_header_item.dart';
 
 class MovieHeader extends StatelessWidget {
-  const MovieHeader({Key? key}) : super(key: key);
+  const MovieHeader({
+    Key? key,
+    required this.releaseYear,
+    required this.rating,
+    required this.language,
+  }) : super(key: key);
+
+  final String releaseYear;
+  final String rating;
+  final String language;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +36,15 @@ class MovieHeader extends StatelessWidget {
         children: [
           MovieHeaderItem(
             icon: Icons.calendar_today,
-            text: '2021',
+            text: releaseYear,
           ),
           MovieHeaderItem(
             icon: Icons.language,
-            text: 'en',
+            text: language,
           ),
           MovieHeaderItem(
             icon: Icons.star,
-            text: '6.9',
+            text: rating,
           ),
         ],
       ),

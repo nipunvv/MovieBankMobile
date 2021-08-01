@@ -15,6 +15,11 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
+  String getYearFromReleaseDate(String releaseDate) {
+    if (releaseDate == '') return '';
+    return releaseDate.substring(0, 4);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +78,84 @@ class _MovieDetailState extends State<MovieDetail> {
                                 "$TMDB_WEB_URL/w342${widget.movie.posterPath}",
                             width: MediaQuery.of(context).size.width * 0.35,
                           ),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.width * 0.525,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    'Release Date: ',
+                                    style: GoogleFonts.barlowCondensed(
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xffa1a2d2),
+                                      letterSpacing: 2,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${widget.movie.releaseDate}',
+                                    style: GoogleFonts.barlowCondensed(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white.withOpacity(0.9),
+                                      letterSpacing: 2,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Vote Count: ',
+                                    style: GoogleFonts.barlowCondensed(
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xffa1a2d2),
+                                      letterSpacing: 2,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${widget.movie.voteCount}',
+                                    style: GoogleFonts.barlowCondensed(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white.withOpacity(0.9),
+                                      letterSpacing: 2,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Duration: ',
+                                    style: GoogleFonts.barlowCondensed(
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xffa1a2d2),
+                                      letterSpacing: 2,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${widget.movie.runtime}',
+                                    style: GoogleFonts.barlowCondensed(
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white.withOpacity(0.9),
+                                      letterSpacing: 2,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),
@@ -106,7 +189,12 @@ class _MovieDetailState extends State<MovieDetail> {
                   SizedBox(
                     height: 10,
                   ),
-                  MovieHeader(),
+                  MovieHeader(
+                    releaseYear:
+                        getYearFromReleaseDate(widget.movie.releaseDate),
+                    rating: widget.movie.voteAvg.toString(),
+                    language: widget.movie.language,
+                  ),
                 ],
               ),
             ),
