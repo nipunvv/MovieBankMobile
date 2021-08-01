@@ -22,16 +22,31 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   late Future<List<Cast>> cast;
+  late Future<Movie> movie;
 
   @override
   void initState() {
     super.initState();
     cast = fetchCast(widget.movie.id);
+    movie = fetchMovieDetails(widget.movie.id);
   }
 
   String getYearFromReleaseDate(String releaseDate) {
     if (releaseDate == '') return '';
     return releaseDate.substring(0, 4);
+  }
+
+  String getMovieDuration(int runtime) {
+    int minutes = runtime % 60;
+    int hour = runtime ~/ 60;
+    String duration = '';
+    if (hour > 0) {
+      duration = '$hour hr';
+      if (minutes > 0) {
+        duration += ' $minutes mins';
+      }
+    }
+    return duration;
   }
 
   Future<List<Cast>> fetchCast(movieId) async {
@@ -56,6 +71,21 @@ class _MovieDetailState extends State<MovieDetail> {
       }
 
       return casts;
+    } else {
+      throw Exception('Failed to load cast');
+    }
+  }
+
+  Future<Movie> fetchMovieDetails(movieId) async {
+    String url = "${TMDB_API_URL}movie/$movieId";
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
+    );
+
+    if (response.statusCode == 200) {
+      Movie movie = Movie.fromJson(jsonDecode(response.body));
+      return movie;
     } else {
       throw Exception('Failed to load cast');
     }
@@ -126,7 +156,7 @@ class _MovieDetailState extends State<MovieDetail> {
                           ),
                         ),
                         SizedBox(
-                          width: 5,
+                          width: 10,
                         ),
                         Container(
                           height: MediaQuery.of(context).size.width * 0.525,
@@ -143,6 +173,38 @@ class _MovieDetailState extends State<MovieDetail> {
                               MovieMeta(
                                   title: 'Duration',
                                   value: widget.movie.runtime.toString()),
+                              Row(
+                                children: [
+                                  Text(
+                                    'Duration: ',
+                                    style: GoogleFonts.barlowCondensed(
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xffa1a2d2),
+                                      letterSpacing: 2,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  FutureBuilder<Movie>(
+                                    future: movie,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        Movie? movie = snapshot.data;
+                                        return Text(
+                                          getMovieDuration(movie!.runtime),
+                                          style: GoogleFonts.barlowCondensed(
+                                            fontWeight: FontWeight.w500,
+                                            color:
+                                                Colors.white.withOpacity(0.9),
+                                            letterSpacing: 2,
+                                            fontSize: 14,
+                                          ),
+                                        );
+                                      }
+                                      return Text('');
+                                    },
+                                  ),
+                                ],
+                              ),
                               Row(
                                 children: [
                                   Text(
