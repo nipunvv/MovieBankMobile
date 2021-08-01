@@ -23,9 +23,14 @@ class Cast {
       name: json['name'],
       avatar: json['profile_path'] ?? '',
       creditId: json['credit_id'],
-      character: json['character'],
+      character: json['character'] ?? '',
       department: json['department'] ?? '',
       job: json['job'] ?? '',
     );
+  }
+
+  @override
+  String toString() {
+    return this.department;
   }
 }
