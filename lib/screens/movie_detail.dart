@@ -167,14 +167,17 @@ class _MovieDetailState extends State<MovieDetail> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               MovieMeta(
-                                  title: 'Release Date',
-                                  value: widget.movie.releaseDate),
+                                title: 'Release Date',
+                                value: widget.movie.releaseDate,
+                              ),
                               MovieMeta(
-                                  title: 'Vote Count',
-                                  value: widget.movie.voteCount.toString()),
+                                title: 'Vote Count',
+                                value: widget.movie.voteCount.toString(),
+                              ),
                               MovieMeta(
-                                  title: 'Duration',
-                                  value: widget.movie.runtime.toString()),
+                                title: 'Duration',
+                                value: widget.movie.runtime.toString(),
+                              ),
                               Row(
                                 children: [
                                   Text(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
@@ -68,49 +69,115 @@ class _ActorDetailState extends State<ActorDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Color(0xff303043),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 30,
-        ),
-        child: FutureBuilder<Actor>(
-          future: actorDetails,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              Actor? actor = snapshot.data;
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage: NetworkImage(
-                            "$TMDB_WEB_URL/w185/${actor!.profilePath}"),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Color(0xff323143),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: FutureBuilder<Actor>(
+            future: actorDetails,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                Actor? actor = snapshot.data;
+                return Stack(
+                  children: [
+                    Hero(
+                      tag: 'actor_${widget.actorId}}',
+                      child: CachedNetworkImage(
+                        imageUrl: "$TMDB_WEB_URL/h632/${actor!.profilePath}",
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.cover,
+                        colorBlendMode: BlendMode.lighten,
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        actor.name,
-                        style: GoogleFonts.barlowCondensed(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white.withOpacity(.85),
-                          letterSpacing: 2,
-                          fontSize: 24,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.3),
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        gradient: LinearGradient(
+                          begin: FractionalOffset.topCenter,
+                          end: FractionalOffset.bottomCenter,
+                          colors: [
+                            Colors.grey.withOpacity(0.0),
+                            Color(0xff303043),
+                          ],
+                          stops: [0.0, 1.0],
                         ),
                       ),
-                    ],
-                  )
-                ],
-              );
-            }
-            return Text('');
-          },
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.55,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              actor.name,
+                              style: GoogleFonts.barlowCondensed(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white.withOpacity(.85),
+                                letterSpacing: 2,
+                                fontSize: 30,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.35,
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color(0xff323143),
+                              borderRadius: BorderRadius.circular(
+                                15,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'Bio',
+                                  style: GoogleFonts.barlowCondensed(
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xffa1a2d2),
+                                    letterSpacing: 2,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  actor.biography,
+                                  style: GoogleFonts.barlowCondensed(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white.withOpacity(0.9),
+                                    letterSpacing: 2,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return Text('');
+            },
+          ),
         ),
       ),
     );

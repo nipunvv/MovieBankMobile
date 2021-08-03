@@ -28,10 +28,13 @@ class ActorBrief extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 35,
-                  backgroundImage: getBackgroundImage(
-                    actor.avatar,
+                Hero(
+                  tag: 'actor_${actor.id}',
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundImage: getBackgroundImage(
+                      actor.avatar,
+                    ),
                   ),
                 ),
                 SizedBox(
