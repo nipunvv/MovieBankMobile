@@ -24,6 +24,7 @@ class ActorDetail extends StatefulWidget {
 class _ActorDetailState extends State<ActorDetail> {
   late Future<List<Movie>> movies;
   late Future<Actor> actorDetails;
+  bool isShowingFullBio = true;
 
   @override
   void initState() {
@@ -64,6 +65,43 @@ class _ActorDetailState extends State<ActorDetail> {
     } else {
       throw Exception('Failed to load movies');
     }
+  }
+
+  String getBioText(String bio) {
+    return bio.length > 500 ? bio.substring(0, 500) : bio;
+  }
+
+  Widget getActorBio(String bio) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          getBioText(bio),
+          style: GoogleFonts.barlowCondensed(
+            fontWeight: FontWeight.w500,
+            color: Colors.white.withOpacity(0.9),
+            letterSpacing: 2,
+            fontSize: 14,
+          ),
+        ),
+        if (bio.length > 500)
+          InkWell(
+            onTap: () {
+              //
+            },
+            child: Text(
+              'show more+',
+              style: GoogleFonts.barlowCondensed(
+                fontWeight: FontWeight.w800,
+                color: Colors.white.withOpacity(0.9),
+                letterSpacing: 2,
+                fontSize: 16,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          )
+      ],
+    );
   }
 
   @override
@@ -157,15 +195,7 @@ class _ActorDetailState extends State<ActorDetail> {
                                     fontSize: 20,
                                   ),
                                 ),
-                                Text(
-                                  actor.biography,
-                                  style: GoogleFonts.barlowCondensed(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white.withOpacity(0.9),
-                                    letterSpacing: 2,
-                                    fontSize: 14,
-                                  ),
-                                ),
+                                getActorBio(actor.biography),
                               ],
                             ),
                           )
