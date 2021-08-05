@@ -24,7 +24,7 @@ class ActorDetail extends StatefulWidget {
 class _ActorDetailState extends State<ActorDetail> {
   late Future<List<Movie>> movies;
   late Future<Actor> actorDetails;
-  bool isShowingFullBio = true;
+  bool isShowingFullBio = false;
 
   @override
   void initState() {
@@ -76,7 +76,7 @@ class _ActorDetailState extends State<ActorDetail> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          getBioText(bio),
+          isShowingFullBio ? bio : getBioText(bio),
           style: GoogleFonts.barlowCondensed(
             fontWeight: FontWeight.w500,
             color: Colors.white.withOpacity(0.9),
@@ -87,10 +87,12 @@ class _ActorDetailState extends State<ActorDetail> {
         if (bio.length > 500)
           InkWell(
             onTap: () {
-              //
+              setState(() {
+                isShowingFullBio = !isShowingFullBio;
+              });
             },
             child: Text(
-              'show more+',
+              isShowingFullBio ? 'Show less' : 'show more+',
               style: GoogleFonts.barlowCondensed(
                 fontWeight: FontWeight.w800,
                 color: Colors.white.withOpacity(0.9),
@@ -111,7 +113,9 @@ class _ActorDetailState extends State<ActorDetail> {
         child: Container(
           color: Color(0xff323143),
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
           child: FutureBuilder<Actor>(
             future: actorDetails,
             builder: (context, snapshot) {
@@ -168,7 +172,6 @@ class _ActorDetailState extends State<ActorDetail> {
                             height: 10,
                           ),
                           Container(
-                            height: MediaQuery.of(context).size.height * 0.35,
                             width: MediaQuery.of(context).size.width,
                             padding: EdgeInsets.symmetric(
                               horizontal: 10,
@@ -196,6 +199,9 @@ class _ActorDetailState extends State<ActorDetail> {
                                   ),
                                 ),
                                 getActorBio(actor.biography),
+                                SizedBox(
+                                  height: 10,
+                                ),
                               ],
                             ),
                           )
