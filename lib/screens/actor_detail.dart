@@ -83,6 +83,7 @@ class _ActorDetailState extends State<ActorDetail> {
             letterSpacing: 2,
             fontSize: 14,
           ),
+          textAlign: TextAlign.justify,
         ),
         if (bio.length > 500)
           InkWell(
@@ -92,7 +93,7 @@ class _ActorDetailState extends State<ActorDetail> {
               });
             },
             child: Text(
-              isShowingFullBio ? 'Show less' : 'show more+',
+              isShowingFullBio ? 'Show less-' : 'show more+',
               style: GoogleFonts.barlowCondensed(
                 fontWeight: FontWeight.w800,
                 color: Colors.white.withOpacity(0.9),

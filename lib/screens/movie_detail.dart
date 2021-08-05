@@ -11,6 +11,7 @@ import 'package:movie_bank_mobile/widgets/cast_list.dart';
 import 'package:movie_bank_mobile/widgets/genre_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_header.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_bank_mobile/widgets/movie_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_meta.dart';
 import 'package:movie_bank_mobile/widgets/synopsis.dart';
 
@@ -25,12 +26,14 @@ class MovieDetail extends StatefulWidget {
 class _MovieDetailState extends State<MovieDetail> {
   late Future<List<Cast>> cast;
   late Future<Movie> movie;
+  late Future<List<Movie>> similarMovies;
 
   @override
   void initState() {
     super.initState();
     cast = fetchCast(widget.movie.id);
     movie = fetchMovieDetails(widget.movie.id);
+    similarMovies = fetchSimilarMovies(widget.movie.id);
   }
 
   String getYearFromReleaseDate(String releaseDate) {
@@ -93,6 +96,25 @@ class _MovieDetailState extends State<MovieDetail> {
     }
   }
 
+  Future<List<Movie>> fetchSimilarMovies(movieId) async {
+    String url = "${TMDB_API_URL}movie/$movieId/similar";
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
+    );
+
+    if (response.statusCode == 200) {
+      List<Movie> movies = [];
+      for (Map<String, dynamic> movie in jsonDecode(response.body)['results']) {
+        movies.add(Movie.fromJson(movie));
+      }
+
+      return movies;
+    } else {
+      throw Exception('Failed to load similar movies');
+    }
+  }
+
   String getDirectorName(List<Cast> cast) {
     Cast director = cast.firstWhere((element) => element.job == 'Director');
     return director.name;
@@ -137,7 +159,9 @@ class _MovieDetailState extends State<MovieDetail> {
                 top: MediaQuery.of(context).size.height * 0.7,
               ),
               color: Color(0xff1a1a24),
-              height: MediaQuery.of(context).size.height,
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
               child: Column(
                 children: [
                   Container(
@@ -257,6 +281,16 @@ class _MovieDetailState extends State<MovieDetail> {
                         return CastList(
                           cast: cast,
                         );
+                      }
+                      return Text('');
+                    },
+                  ),
+                  FutureBuilder<List<Movie>>(
+                    future: similarMovies,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<Movie> movies = snapshot.data ?? [];
+                        return MovieList(movies: movies);
                       }
                       return Text('');
                     },

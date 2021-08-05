@@ -40,6 +40,7 @@ class Synopsis extends StatelessWidget {
               letterSpacing: 2,
               fontSize: 14,
             ),
+            textAlign: TextAlign.justify,
           ),
         ],
       ),
