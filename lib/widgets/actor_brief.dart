@@ -128,7 +128,7 @@ class ActorBrief extends StatelessWidget {
                   vertical: 2,
                 ),
                 child: Text(
-                  'View all movies',
+                  'View profile',
                   style: TextStyle(
                     color: Colors.blue,
                     fontFamily: 'Quicksand',
