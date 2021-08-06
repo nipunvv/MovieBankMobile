@@ -28,12 +28,13 @@ class GenreList extends StatelessWidget {
     else
       return Padding(
         padding: EdgeInsets.only(left: 10, right: 10),
-        child: Row(
+        child: Wrap(
           children: [
             for (int genreId in genreIds)
               Padding(
                 padding: EdgeInsets.only(
                   right: 10,
+                  top: 5,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(

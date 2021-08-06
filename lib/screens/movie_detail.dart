@@ -318,7 +318,7 @@ class _MovieDetailState extends State<MovieDetail> {
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 3,
                   ),
                   GenreList(genreIds: widget.movie.genreIds),
                   SizedBox(
