@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:movie_bank_mobile/providers/provider.dart';
 import 'package:movie_bank_mobile/screens/Home.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 void main() {
-  runApp(MovieBank());
+  runApp(
+    MultiProvider(
+      providers: providers,
+      child: MovieBank(),
+    ),
+  );
 }
+
+List<SingleChildWidget> providers = [
+  ChangeNotifierProvider<GenreProvider>(create: (_) => GenreProvider()),
+];
 
 class MovieBank extends StatelessWidget {
   final Map<int, Color> color = {

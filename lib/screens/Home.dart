@@ -7,7 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_bank_mobile/providers/provider.dart';
 import 'package:movie_bank_mobile/screens/movie_detail.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -49,6 +51,8 @@ class _HomeState extends State<Home> {
     super.initState();
     popularMovies = fetchMovies('popular');
     latestMovies = fetchMovies('latest');
+    final genreModel = Provider.of<GenreProvider>(context, listen: false);
+    genreModel.getGenreData();
   }
 
   Widget showMovies(String type) {
