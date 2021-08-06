@@ -13,6 +13,7 @@ import 'package:movie_bank_mobile/widgets/movie_header.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/widgets/movie_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_meta.dart';
+import 'package:movie_bank_mobile/widgets/pahe_search.dart';
 import 'package:movie_bank_mobile/widgets/synopsis.dart';
 
 class MovieDetail extends StatefulWidget {
@@ -187,7 +188,7 @@ class _MovieDetailState extends State<MovieDetail> {
                         Container(
                           height: MediaQuery.of(context).size.width * 0.525,
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               MovieMeta(
@@ -197,10 +198,6 @@ class _MovieDetailState extends State<MovieDetail> {
                               MovieMeta(
                                 title: 'Vote Count',
                                 value: widget.movie.voteCount.toString(),
-                              ),
-                              MovieMeta(
-                                title: 'Duration',
-                                value: widget.movie.runtime.toString(),
                               ),
                               Row(
                                 children: [
@@ -265,6 +262,10 @@ class _MovieDetailState extends State<MovieDetail> {
                                     },
                                   ),
                                 ],
+                              ),
+                              PaheSearch(title: widget.movie.title),
+                              SizedBox(
+                                height: 2,
                               ),
                             ],
                           ),
