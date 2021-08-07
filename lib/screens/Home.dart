@@ -56,75 +56,71 @@ class _HomeState extends State<Home> {
   }
 
   Widget showMovies(String type) {
-    return Expanded(
-      child: Container(
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height * 0.4,
-        ),
-        width: MediaQuery.of(context).size.width,
-        child: SizedBox(
-          width: double.infinity,
-          child: FutureBuilder<List<Movie>>(
-            future: type == 'popular' ? popularMovies : latestMovies,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<Movie>? movies = snapshot.data ?? [];
-                return ListView.separated(
-                    physics: PageScrollPhysics(),
-                    separatorBuilder: (context, index) => Divider(
-                          indent: dividerIndent,
-                        ),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movies.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          left: 5,
-                          right: 5,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MovieDetail(
-                                    movie: movies[index],
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Hero(
-                              tag:
-                                  'movie_image_${movies[index].category}_${movies[index].id}',
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    "$TMDB_WEB_URL/w342${movies[index].posterPath}",
-                                fit: BoxFit.cover,
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height * 0.30,
+      ),
+      width: MediaQuery.of(context).size.width,
+      height: 100,
+      child: FutureBuilder<List<Movie>>(
+        future: type == 'popular' ? popularMovies : latestMovies,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Movie>? movies = snapshot.data ?? [];
+            return ListView.separated(
+                physics: PageScrollPhysics(),
+                separatorBuilder: (context, index) => Divider(
+                      indent: dividerIndent,
+                    ),
+                scrollDirection: Axis.horizontal,
+                itemCount: movies.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      left: 5,
+                      right: 5,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetail(
+                                movie: movies[index],
                               ),
                             ),
+                          );
+                        },
+                        child: Hero(
+                          tag:
+                              'movie_image_${movies[index].category}_${movies[index].id}',
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                "$TMDB_WEB_URL/w342${movies[index].posterPath}",
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      );
-                    });
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
+                      ),
+                    ),
+                  );
+                });
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
 
-              return SizedBox(
-                height: 100,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+          return SizedBox(
+            height: 100,
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -132,6 +128,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'MOVIE BANK',
+          style: GoogleFonts.barlowCondensed(
+            fontWeight: FontWeight.w500,
+            color: Colors.white.withOpacity(.85),
+            letterSpacing: 2,
+            fontSize: 28,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           color: Color(0xff303043),
@@ -160,7 +167,7 @@ class _HomeState extends State<Home> {
               ),
               showMovies('popular'),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Text(
                 'LATEST',
@@ -170,6 +177,9 @@ class _HomeState extends State<Home> {
                   letterSpacing: 2,
                   fontSize: 28,
                 ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               showMovies('latest'),
             ],

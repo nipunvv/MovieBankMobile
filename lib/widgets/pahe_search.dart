@@ -36,7 +36,6 @@ class PaheSearch extends StatelessWidget {
           children: [
             Icon(
               Icons.search,
-              // color: Colors.white.withOpacity(0.85),
               color: Color(0xffa1a2d2).withOpacity(0.8),
             ),
             Text(
