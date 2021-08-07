@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
+import 'package:movie_bank_mobile/models/credit.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
+import 'package:movie_bank_mobile/widgets/cast_brief.dart';
 import 'package:movie_bank_mobile/widgets/cast_list.dart';
+import 'package:movie_bank_mobile/widgets/director.dart';
 import 'package:movie_bank_mobile/widgets/genre_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_header.dart';
 import 'package:http/http.dart' as http;
@@ -114,11 +117,6 @@ class _MovieDetailState extends State<MovieDetail> {
     } else {
       throw Exception('Failed to load similar movies');
     }
-  }
-
-  String getDirectorName(List<Cast> cast) {
-    Cast director = cast.firstWhere((element) => element.job == 'Director');
-    return director.name;
   }
 
   @override
@@ -231,38 +229,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'Director: ',
-                                    style: GoogleFonts.barlowCondensed(
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xffa1a2d2),
-                                      letterSpacing: 2,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  FutureBuilder<List<Cast>>(
-                                    future: cast,
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        List<Cast>? cast = snapshot.data ?? [];
-                                        return Text(
-                                          getDirectorName(cast),
-                                          style: GoogleFonts.barlowCondensed(
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Colors.white.withOpacity(0.9),
-                                            letterSpacing: 2,
-                                            fontSize: 14,
-                                          ),
-                                        );
-                                      }
-                                      return Text('');
-                                    },
-                                  ),
-                                ],
-                              ),
+                              Director(director: cast),
                               PaheSearch(title: widget.movie.title),
                               SizedBox(
                                 height: 2,

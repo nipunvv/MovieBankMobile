@@ -1,15 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movie_bank_mobile/constants.dart';
+import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
 import 'dart:math' as math;
-import 'package:http/http.dart' as http;
 
 import 'package:movie_bank_mobile/models/credit.dart';
-import 'package:movie_bank_mobile/widgets/actor_brief.dart';
+import 'package:movie_bank_mobile/utils/image_utils.dart';
+import 'package:movie_bank_mobile/widgets/cast_brief.dart';
 
 class CastList extends StatelessWidget {
   const CastList({
@@ -17,29 +14,6 @@ class CastList extends StatelessWidget {
     required this.cast,
   }) : super(key: key);
   final List<Cast> cast;
-
-  getBackgroundImage(imageUrl) {
-    if (imageUrl == '') {
-      return AssetImage('assets/images/avatar.jpg');
-    } else {
-      return NetworkImage("$TMDB_WEB_URL/w185/$imageUrl");
-    }
-  }
-
-  Future<Credit> fetchCastDetails(String creditId) async {
-    String url = "${TMDB_API_URL}credit/$creditId";
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
-    );
-
-    if (response.statusCode == 200) {
-      Credit credit = Credit.fromJson(jsonDecode(response.body));
-      return credit;
-    } else {
-      throw Exception('Failed to load cast details');
-    }
-  }
 
   showCastDetails(BuildContext context, Cast actor) {
     Future<Credit> castDetails = fetchCastDetails(actor.creditId);
@@ -57,7 +31,12 @@ class CastList extends StatelessWidget {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   Credit? credit = snapshot.data;
-                  return ActorBrief(actor, credit, getBackgroundImage, () {});
+                  return CastBrief(
+                    actor,
+                    credit,
+                    getBackgroundImage,
+                    'actor',
+                  );
                 } else {
                   return Center(
                     child: SizedBox(

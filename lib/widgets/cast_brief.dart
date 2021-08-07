@@ -6,16 +6,16 @@ import 'package:movie_bank_mobile/models/credit.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:movie_bank_mobile/screens/actor_detail.dart';
 
-class ActorBrief extends StatelessWidget {
+class CastBrief extends StatelessWidget {
   final Cast actor;
   final Credit? credit;
   final Function getBackgroundImage;
-  final Function changeMovie;
-  ActorBrief(
+  final String type;
+  CastBrief(
     this.actor,
     this.credit,
     this.getBackgroundImage,
-    this.changeMovie,
+    this.type,
   );
 
   @override
@@ -52,22 +52,24 @@ class ActorBrief extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    Text(
-                      'as',
-                      style: TextStyle(
-                        fontFamily: 'Quicksand',
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12,
+                    if (type == 'actor')
+                      Text(
+                        'as',
+                        style: TextStyle(
+                          fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                    Text(
-                      actor.character,
-                      style: TextStyle(
-                        fontFamily: 'Quicksand',
-                        fontWeight: FontWeight.normal,
-                        fontSize: 12,
+                    if (type == 'actor')
+                      Text(
+                        actor.character,
+                        style: TextStyle(
+                          fontFamily: 'Quicksand',
+                          fontWeight: FontWeight.normal,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
                   ],
                 )
               ],
@@ -94,7 +96,6 @@ class ActorBrief extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         Navigator.pop(context);
-                        changeMovie(Movie.fromJson(item));
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
