@@ -8,6 +8,7 @@ import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/actor.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_bank_mobile/screens/person_movies.dart';
 
 class ActorDetail extends StatefulWidget {
   const ActorDetail({
@@ -222,26 +223,37 @@ class _ActorDetailState extends State<ActorDetail> {
           ),
           Positioned(
             top: MediaQuery.of(context).size.height - 70,
-            child: Container(
-              color: Color(0xff323143),
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              padding: EdgeInsets.all(10),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        PersonMovies(personId: widget.actorId),
+                  ),
+                );
+              },
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Color(0xffa1a2d2),
-                ),
-                child: Center(
-                  child: Text(
-                    'VIEW MOVIES',
-                    style: GoogleFonts.barlowCondensed(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white.withOpacity(.85),
-                      letterSpacing: 2,
-                      fontSize: 28,
+                color: Color(0xff323143),
+                width: MediaQuery.of(context).size.width,
+                height: 70,
+                padding: EdgeInsets.all(10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Color(0xffa1a2d2),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'VIEW MOVIES',
+                      style: GoogleFonts.barlowCondensed(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white.withOpacity(.85),
+                        letterSpacing: 2,
+                        fontSize: 28,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
