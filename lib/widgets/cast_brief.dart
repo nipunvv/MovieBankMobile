@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
 import 'package:movie_bank_mobile/models/credit.dart';
-import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:movie_bank_mobile/screens/actor_detail.dart';
 
 class CastBrief extends StatelessWidget {
