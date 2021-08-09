@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
+import 'package:movie_bank_mobile/screens/movie_detail.dart';
 
 class PersonMovies extends StatefulWidget {
   const PersonMovies({
@@ -87,7 +88,14 @@ class _PersonMoviesState extends State<PersonMovies> {
                                     borderRadius: BorderRadius.circular(3.0),
                                     child: InkWell(
                                       onTap: () {
-                                        // go to movie detail page
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MovieDetail(
+                                              movie: movies[index],
+                                            ),
+                                          ),
+                                        );
                                       },
                                       child: Hero(
                                         tag: 'movie_image${movies[index].id}',
