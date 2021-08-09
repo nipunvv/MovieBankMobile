@@ -54,6 +54,10 @@ Future<List<Movie>> fetchMoviesOfPerson(int personId) async {
       movies.add(Movie.fromJson(movie));
     }
 
+    for (Map<String, dynamic> movie in jsonDecode(response.body)['crew']) {
+      movies.add(Movie.fromJson(movie));
+    }
+
     return movies;
   } else {
     throw Exception('Failed to load movies');
