@@ -8,9 +8,11 @@ class MovieList extends StatelessWidget {
   const MovieList({
     Key? key,
     required this.movies,
+    required this.changeMovie,
   }) : super(key: key);
 
   final List<Movie> movies;
+  final Function changeMovie;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class MovieList extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5.0),
                       child: InkWell(
                         onTap: () {
-                          //
+                          changeMovie(movies[index]);
                         },
                         child: Hero(
                           tag:

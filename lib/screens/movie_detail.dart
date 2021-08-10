@@ -28,6 +28,7 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
+  late Movie currentMovie;
   late Future<List<Cast>> cast;
   late Future<Movie> movie;
   late Future<List<Movie>> similarMovies;
@@ -35,9 +36,10 @@ class _MovieDetailState extends State<MovieDetail> {
   @override
   void initState() {
     super.initState();
-    cast = fetchCast(widget.movie.id);
-    movie = fetchMovieDetails(widget.movie.id);
-    similarMovies = fetchSimilarMovies(widget.movie.id);
+    currentMovie = widget.movie;
+    cast = fetchCast(currentMovie.id);
+    movie = fetchMovieDetails(currentMovie.id);
+    similarMovies = fetchSimilarMovies(currentMovie.id);
   }
 
   String getYearFromReleaseDate(String releaseDate) {
@@ -119,6 +121,15 @@ class _MovieDetailState extends State<MovieDetail> {
     }
   }
 
+  changeMovie(Movie newMovie) {
+    this.setState(() {
+      currentMovie = newMovie;
+      cast = fetchCast(newMovie.id);
+      movie = fetchMovieDetails(newMovie.id);
+      similarMovies = fetchSimilarMovies(newMovie.id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,9 +139,9 @@ class _MovieDetailState extends State<MovieDetail> {
             Align(
               alignment: Alignment.topCenter,
               child: Hero(
-                tag: 'movie_image_${widget.movie.category}_${widget.movie.id}',
+                tag: 'movie_image_${currentMovie.category}_${currentMovie.id}',
                 child: CachedNetworkImage(
-                  imageUrl: "$TMDB_WEB_URL/w342${widget.movie.posterPath}",
+                  imageUrl: "$TMDB_WEB_URL/w342${currentMovie.posterPath}",
                   width: MediaQuery.of(context).size.width,
                   fit: BoxFit.contain,
                 ),
@@ -176,7 +187,7 @@ class _MovieDetailState extends State<MovieDetail> {
                           borderRadius: BorderRadius.circular(5),
                           child: CachedNetworkImage(
                             imageUrl:
-                                "$TMDB_WEB_URL/w342${widget.movie.posterPath}",
+                                "$TMDB_WEB_URL/w342${currentMovie.posterPath}",
                             width: MediaQuery.of(context).size.width * 0.35,
                           ),
                         ),
@@ -191,11 +202,11 @@ class _MovieDetailState extends State<MovieDetail> {
                             children: [
                               MovieMeta(
                                 title: 'Release Date',
-                                value: widget.movie.releaseDate,
+                                value: currentMovie.releaseDate,
                               ),
                               MovieMeta(
                                 title: 'Vote Count',
-                                value: widget.movie.voteCount.toString(),
+                                value: currentMovie.voteCount.toString(),
                               ),
                               Row(
                                 children: [
@@ -230,7 +241,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                 ],
                               ),
                               Director(director: cast),
-                              PaheSearch(title: widget.movie.title),
+                              PaheSearch(title: currentMovie.title),
                               SizedBox(
                                 height: 2,
                               ),
@@ -240,7 +251,7 @@ class _MovieDetailState extends State<MovieDetail> {
                       ],
                     ),
                   ),
-                  Synopsis(synopsis: widget.movie.overview),
+                  Synopsis(synopsis: currentMovie.overview),
                   FutureBuilder<List<Cast>>(
                     future: cast,
                     builder: (context, snapshot) {
@@ -258,7 +269,10 @@ class _MovieDetailState extends State<MovieDetail> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<Movie> movies = snapshot.data ?? [];
-                        return MovieList(movies: movies);
+                        return MovieList(
+                          movies: movies,
+                          changeMovie: changeMovie,
+                        );
                       }
                       return Text('');
                     },
@@ -276,7 +290,7 @@ class _MovieDetailState extends State<MovieDetail> {
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      widget.movie.title,
+                      currentMovie.title,
                       style: GoogleFonts.barlowCondensed(
                         fontWeight: FontWeight.w500,
                         color: Colors.white.withOpacity(.85),
@@ -288,15 +302,15 @@ class _MovieDetailState extends State<MovieDetail> {
                   SizedBox(
                     height: 3,
                   ),
-                  GenreList(genreIds: widget.movie.genreIds),
+                  GenreList(genreIds: currentMovie.genreIds),
                   SizedBox(
                     height: 10,
                   ),
                   MovieHeader(
                     releaseYear:
-                        getYearFromReleaseDate(widget.movie.releaseDate),
-                    rating: widget.movie.voteAvg.toString(),
-                    language: widget.movie.language,
+                        getYearFromReleaseDate(currentMovie.releaseDate),
+                    rating: currentMovie.voteAvg.toString(),
+                    language: currentMovie.language,
                   ),
                 ],
               ),
