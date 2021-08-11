@@ -30,6 +30,7 @@ class _MovieDetailState extends State<MovieDetail> {
   late Future<List<Cast>> cast;
   late Future<Movie> movie;
   late Future<List<Movie>> similarMovies;
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -126,12 +127,18 @@ class _MovieDetailState extends State<MovieDetail> {
       movie = fetchMovieDetails(newMovie.id);
       similarMovies = fetchSimilarMovies(newMovie.id);
     });
+    _scrollController.animateTo(
+      0,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Stack(
           children: [
             Align(
