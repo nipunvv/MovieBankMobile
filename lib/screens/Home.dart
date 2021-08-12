@@ -9,6 +9,7 @@ import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/providers/provider.dart';
 import 'package:movie_bank_mobile/screens/movie_detail.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -131,12 +132,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text(
           'MOVIE BANK',
-          style: GoogleFonts.barlowCondensed(
-            fontWeight: FontWeight.w500,
-            color: Colors.white.withOpacity(.85),
-            letterSpacing: 2,
-            fontSize: 28,
-          ),
+          style: CustomTextStyles.text28(context),
         ),
       ),
       body: SafeArea(
@@ -155,12 +151,7 @@ class _HomeState extends State<Home> {
               ),
               Text(
                 'POPULAR',
-                style: GoogleFonts.barlowCondensed(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white.withOpacity(.85),
-                  letterSpacing: 2,
-                  fontSize: 28,
-                ),
+                style: CustomTextStyles.text28(context),
               ),
               SizedBox(
                 height: 10,
@@ -171,12 +162,7 @@ class _HomeState extends State<Home> {
               ),
               Text(
                 'LATEST',
-                style: GoogleFonts.barlowCondensed(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white.withOpacity(.85),
-                  letterSpacing: 2,
-                  fontSize: 28,
-                ),
+                style: CustomTextStyles.text28(context),
               ),
               SizedBox(
                 height: 10,

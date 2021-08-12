@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PaheSearch extends StatelessWidget {
@@ -40,12 +41,7 @@ class PaheSearch extends StatelessWidget {
             ),
             Text(
               'Search on Pahe',
-              style: GoogleFonts.barlowCondensed(
-                fontWeight: FontWeight.w500,
-                color: Color(0xffa1a2d2),
-                letterSpacing: 2,
-                fontSize: 16,
-              ),
+              style: CustomTextStyles.text16light(context),
             ),
           ],
         ),

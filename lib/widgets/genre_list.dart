@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/models/genre.dart';
 import 'package:movie_bank_mobile/providers/provider.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:provider/provider.dart';
 
 class GenreList extends StatelessWidget {
@@ -55,12 +56,7 @@ class GenreList extends StatelessWidget {
                     ),
                     child: Text(
                       getGenre(genreModel.genres, genreId),
-                      style: GoogleFonts.barlowCondensed(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white.withOpacity(.85),
-                        letterSpacing: 2,
-                        fontSize: 18,
-                      ),
+                      style: CustomTextStyles.text18(context),
                     ),
                   ),
                 ),

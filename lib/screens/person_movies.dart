@@ -5,6 +5,7 @@ import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:movie_bank_mobile/screens/movie_detail.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 
 class PersonMovies extends StatefulWidget {
   const PersonMovies({
@@ -62,12 +63,7 @@ class _PersonMoviesState extends State<PersonMovies> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             'MOVIES',
-                            style: GoogleFonts.barlowCondensed(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white.withOpacity(.85),
-                              letterSpacing: 2,
-                              fontSize: 28,
-                            ),
+                            style: CustomTextStyles.text28(context),
                           ),
                         ),
                       ),

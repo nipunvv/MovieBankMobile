@@ -9,6 +9,7 @@ import 'package:movie_bank_mobile/models/actor.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/screens/person_movies.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 
 class ActorDetail extends StatefulWidget {
   const ActorDetail({
@@ -78,12 +79,7 @@ class _ActorDetailState extends State<ActorDetail> {
       children: [
         Text(
           isShowingFullBio ? bio : getBioText(bio),
-          style: GoogleFonts.barlowCondensed(
-            fontWeight: FontWeight.w500,
-            color: Colors.white.withOpacity(0.9),
-            letterSpacing: 2,
-            fontSize: 14,
-          ),
+          style: CustomTextStyles.text14(context),
           textAlign: TextAlign.justify,
         ),
         if (bio.length > 500)
@@ -95,13 +91,7 @@ class _ActorDetailState extends State<ActorDetail> {
             },
             child: Text(
               isShowingFullBio ? 'Show less-' : 'show more+',
-              style: GoogleFonts.barlowCondensed(
-                fontWeight: FontWeight.w800,
-                color: Colors.white.withOpacity(0.9),
-                letterSpacing: 2,
-                fontSize: 16,
-                decoration: TextDecoration.underline,
-              ),
+              style: CustomTextStyles.text16(context),
             ),
           )
       ],
@@ -165,12 +155,7 @@ class _ActorDetailState extends State<ActorDetail> {
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(
                                   actor.name,
-                                  style: GoogleFonts.barlowCondensed(
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white.withOpacity(.85),
-                                    letterSpacing: 2,
-                                    fontSize: 30,
-                                  ),
+                                  style: CustomTextStyles.text30(context),
                                 ),
                               ),
                               SizedBox(
@@ -196,12 +181,8 @@ class _ActorDetailState extends State<ActorDetail> {
                                     ),
                                     Text(
                                       'Bio',
-                                      style: GoogleFonts.barlowCondensed(
-                                        fontWeight: FontWeight.w500,
-                                        color: Color(0xffa1a2d2),
-                                        letterSpacing: 2,
-                                        fontSize: 20,
-                                      ),
+                                      style:
+                                          CustomTextStyles.text20light(context),
                                     ),
                                     getActorBio(actor.biography),
                                     SizedBox(
@@ -246,12 +227,7 @@ class _ActorDetailState extends State<ActorDetail> {
                   child: Center(
                     child: Text(
                       'VIEW MOVIES',
-                      style: GoogleFonts.barlowCondensed(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white.withOpacity(.85),
-                        letterSpacing: 2,
-                        fontSize: 28,
-                      ),
+                      style: CustomTextStyles.text28(context),
                       textAlign: TextAlign.center,
                     ),
                   ),

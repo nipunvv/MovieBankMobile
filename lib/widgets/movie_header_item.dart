@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 
 class MovieHeaderItem extends StatelessWidget {
   const MovieHeaderItem({Key? key, required this.icon, required this.text})
@@ -23,12 +24,7 @@ class MovieHeaderItem extends StatelessWidget {
         ),
         Text(
           text,
-          style: GoogleFonts.barlowCondensed(
-            fontWeight: FontWeight.w500,
-            color: Colors.white.withOpacity(.85),
-            letterSpacing: 2,
-            fontSize: 20,
-          ),
+          style: CustomTextStyles.text20(context),
         ),
       ],
     );

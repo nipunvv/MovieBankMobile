@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:movie_bank_mobile/widgets/cast_list.dart';
 import 'package:movie_bank_mobile/widgets/director.dart';
 import 'package:movie_bank_mobile/widgets/genre_list.dart';
@@ -217,12 +218,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                 children: [
                                   Text(
                                     'Duration: ',
-                                    style: GoogleFonts.barlowCondensed(
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xffa1a2d2),
-                                      letterSpacing: 2,
-                                      fontSize: 16,
-                                    ),
+                                    style:
+                                        CustomTextStyles.text16light(context),
                                   ),
                                   FutureBuilder<Movie>(
                                     future: movie,
@@ -231,13 +228,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                         Movie? movie = snapshot.data;
                                         return Text(
                                           getMovieDuration(movie!.runtime),
-                                          style: GoogleFonts.barlowCondensed(
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Colors.white.withOpacity(0.9),
-                                            letterSpacing: 2,
-                                            fontSize: 14,
-                                          ),
+                                          style:
+                                              CustomTextStyles.text14(context),
                                         );
                                       }
                                       return Text('');
@@ -296,12 +288,7 @@ class _MovieDetailState extends State<MovieDetail> {
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
                       currentMovie.title,
-                      style: GoogleFonts.barlowCondensed(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white.withOpacity(.85),
-                        letterSpacing: 2,
-                        fontSize: 35,
-                      ),
+                      style: CustomTextStyles.text35(context),
                     ),
                   ),
                   SizedBox(

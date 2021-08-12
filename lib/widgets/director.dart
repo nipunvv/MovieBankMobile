@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
 import 'package:movie_bank_mobile/models/credit.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:movie_bank_mobile/utils/image_utils.dart';
 import 'package:movie_bank_mobile/widgets/cast_brief.dart';
 
@@ -63,12 +64,7 @@ class Director extends StatelessWidget {
       children: [
         Text(
           'Director: ',
-          style: GoogleFonts.barlowCondensed(
-            fontWeight: FontWeight.w500,
-            color: Color(0xffa1a2d2),
-            letterSpacing: 2,
-            fontSize: 16,
-          ),
+          style: CustomTextStyles.text16light(context),
         ),
         FutureBuilder<List<Cast>>(
           future: director,
@@ -82,12 +78,7 @@ class Director extends StatelessWidget {
                 },
                 child: Text(
                   getDirectorName(cast),
-                  style: GoogleFonts.barlowCondensed(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white.withOpacity(0.9),
-                    letterSpacing: 2,
-                    fontSize: 14,
-                  ),
+                  style: CustomTextStyles.text14(context),
                 ),
               );
             }

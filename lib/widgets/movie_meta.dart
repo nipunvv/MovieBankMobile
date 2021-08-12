@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 
 class MovieMeta extends StatelessWidget {
   const MovieMeta({
@@ -17,21 +18,11 @@ class MovieMeta extends StatelessWidget {
       children: [
         Text(
           '$title: ',
-          style: GoogleFonts.barlowCondensed(
-            fontWeight: FontWeight.w500,
-            color: Color(0xffa1a2d2),
-            letterSpacing: 2,
-            fontSize: 16,
-          ),
+          style: CustomTextStyles.text16light(context),
         ),
         Text(
           value,
-          style: GoogleFonts.barlowCondensed(
-            fontWeight: FontWeight.w500,
-            color: Colors.white.withOpacity(0.9),
-            letterSpacing: 2,
-            fontSize: 14,
-          ),
+          style: CustomTextStyles.text14(context),
         ),
       ],
     );

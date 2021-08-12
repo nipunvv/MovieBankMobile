@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 
 class Synopsis extends StatelessWidget {
   const Synopsis({
@@ -22,24 +23,14 @@ class Synopsis extends StatelessWidget {
         children: [
           Text(
             'Synopsis',
-            style: GoogleFonts.barlowCondensed(
-              fontWeight: FontWeight.w500,
-              color: Colors.white.withOpacity(.85),
-              letterSpacing: 2,
-              fontSize: 35,
-            ),
+            style: CustomTextStyles.text35(context),
           ),
           SizedBox(
             height: 10,
           ),
           Text(
             synopsis,
-            style: GoogleFonts.barlowCondensed(
-              fontWeight: FontWeight.w500,
-              color: Color(0xffa1a2d2),
-              letterSpacing: 2,
-              fontSize: 14,
-            ),
+            style: CustomTextStyles.text14light(context),
             textAlign: TextAlign.justify,
           ),
         ],

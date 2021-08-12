@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 
 class MovieList extends StatelessWidget {
   const MovieList({
@@ -29,12 +30,7 @@ class MovieList extends StatelessWidget {
         children: [
           Text(
             'Similar Movies',
-            style: GoogleFonts.barlowCondensed(
-              fontWeight: FontWeight.w500,
-              color: Colors.white.withOpacity(.85),
-              letterSpacing: 2,
-              fontSize: 35,
-            ),
+            style: CustomTextStyles.text35(context),
           ),
           SizedBox(
             height: 10,

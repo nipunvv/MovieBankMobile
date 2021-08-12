@@ -5,6 +5,7 @@ import 'package:movie_bank_mobile/models/cast.dart';
 import 'dart:math' as math;
 
 import 'package:movie_bank_mobile/models/credit.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:movie_bank_mobile/utils/image_utils.dart';
 import 'package:movie_bank_mobile/widgets/cast_brief.dart';
 
@@ -67,12 +68,7 @@ class CastList extends StatelessWidget {
         children: [
           Text(
             'Cast',
-            style: GoogleFonts.barlowCondensed(
-              fontWeight: FontWeight.w500,
-              color: Colors.white.withOpacity(.85),
-              letterSpacing: 2,
-              fontSize: 35,
-            ),
+            style: CustomTextStyles.text35(context),
           ),
           SizedBox(
             height: 10,
