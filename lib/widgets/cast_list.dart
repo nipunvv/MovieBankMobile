@@ -79,8 +79,29 @@ class CastList extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: List.generate(
-                math.min(cast.length, 10),
+                math.min(cast.length, 11),
                 (int i) {
+                  if (i == 10)
+                    return InkWell(
+                      onTap: () {
+                        // show all cast
+                      },
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Color(0xffa1a2d2),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'view\nall',
+                            style: CustomTextStyles.text14(context),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    );
                   return InkWell(
                     child: Container(
                       margin: EdgeInsets.only(
