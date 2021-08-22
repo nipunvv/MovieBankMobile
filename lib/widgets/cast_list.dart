@@ -55,6 +55,66 @@ class CastList extends StatelessWidget {
     );
   }
 
+  showFullCast(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierLabel: 'Dialog',
+      transitionDuration: Duration(
+        milliseconds: 400,
+      ),
+      pageBuilder: (_, __, ___) {
+        return Scaffold(
+          backgroundColor: Color(0xff303043).withOpacity(0.85),
+          body: SizedBox(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: MediaQuery.of(context).size.height - 70,
+                  child: ListView.builder(
+                    itemCount: cast.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 2),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 30,
+                            backgroundImage: getBackgroundImage(
+                              cast[index].avatar,
+                            ),
+                          ),
+                          title: Text(
+                            cast[index].name,
+                            style: CustomTextStyles.text14(context),
+                          ),
+                          subtitle: Text(
+                            cast[index].character,
+                            style: CustomTextStyles.text14light(context),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Container(
+                  height: 70,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      'close',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -84,7 +144,7 @@ class CastList extends StatelessWidget {
                   if (i == 10)
                     return InkWell(
                       onTap: () {
-                        // show all cast
+                        showFullCast(context);
                       },
                       child: Container(
                         width: 60,
