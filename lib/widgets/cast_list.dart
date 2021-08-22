@@ -91,6 +91,10 @@ class CastList extends StatelessWidget {
                             cast[index].character,
                             style: CustomTextStyles.text14light(context),
                           ),
+                          onTap: () {
+                            Navigator.pop(context);
+                            showCastDetails(context, cast[index]);
+                          },
                         ),
                       );
                     },
