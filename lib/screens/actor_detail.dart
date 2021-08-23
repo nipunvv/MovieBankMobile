@@ -70,7 +70,7 @@ class _ActorDetailState extends State<ActorDetail> {
   }
 
   String getBioText(String bio) {
-    return bio.length > 500 ? bio.substring(0, 500) : bio;
+    return bio.length > 500 ? bio.substring(0, 500) + '...' : bio;
   }
 
   Widget getActorBio(String bio) {
