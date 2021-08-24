@@ -66,52 +66,54 @@ class CastList extends StatelessWidget {
       pageBuilder: (_, __, ___) {
         return Scaffold(
           backgroundColor: Color(0xff303043).withOpacity(0.85),
-          body: SizedBox(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height - 70,
-                  child: ListView.builder(
-                    itemCount: cast.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(vertical: 2),
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 30,
-                            backgroundImage: getBackgroundImage(
-                              cast[index].avatar,
+          body: SafeArea(
+            child: SizedBox(
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height - 98,
+                    child: ListView.builder(
+                      itemCount: cast.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          padding: EdgeInsets.symmetric(vertical: 2),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 30,
+                              backgroundImage: getBackgroundImage(
+                                cast[index].avatar,
+                              ),
                             ),
+                            title: Text(
+                              cast[index].name,
+                              style: CustomTextStyles.text14(context),
+                            ),
+                            subtitle: Text(
+                              cast[index].character,
+                              style: CustomTextStyles.text14light(context),
+                            ),
+                            onTap: () {
+                              Navigator.pop(context);
+                              showCastDetails(context, cast[index]);
+                            },
                           ),
-                          title: Text(
-                            cast[index].name,
-                            style: CustomTextStyles.text14(context),
-                          ),
-                          subtitle: Text(
-                            cast[index].character,
-                            style: CustomTextStyles.text14light(context),
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                            showCastDetails(context, cast[index]);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Container(
-                  height: 70,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(
-                      'close',
-                      style: TextStyle(fontSize: 20),
+                        );
+                      },
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                    height: 70,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        'close',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
