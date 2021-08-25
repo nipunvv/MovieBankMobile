@@ -3,14 +3,16 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/providers/provider.dart';
 import 'package:movie_bank_mobile/screens/movie_detail.dart';
 import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
+import 'package:movie_bank_mobile/utils/page_utils.dart';
 import 'package:provider/provider.dart';
+
+const CURRENT_PAGE = 0;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -135,6 +137,7 @@ class _HomeState extends State<Home> {
           style: CustomTextStyles.text28(context),
         ),
       ),
+      bottomNavigationBar: getBottomNavigationBar(CURRENT_PAGE, context),
       body: SafeArea(
         child: Container(
           color: Color(0xff303043),
