@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:movie_bank_mobile/utils/page_utils.dart';
 
 const CURRENT_PAGE = 1;
@@ -38,15 +39,9 @@ class Search extends StatelessWidget {
                 ),
                 fillColor: Colors.white,
                 filled: true,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 5.0,
-                ),
               ),
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: 14,
-              ),
+              style: CustomTextStyles.text18light(context),
+              cursorWidth: 1,
             ),
           ),
         ),

@@ -93,4 +93,13 @@ class CustomTextStyles {
       fontSize: 14,
     );
   }
+
+  static TextStyle text18light(BuildContext context) {
+    return GoogleFonts.barlowCondensed(
+      fontWeight: FontWeight.w500,
+      color: Color(0xffa1a2d2),
+      letterSpacing: 2,
+      fontSize: 18,
+    );
+  }
 }
