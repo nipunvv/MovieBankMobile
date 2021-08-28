@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
+import 'package:movie_bank_mobile/screens/movie_detail.dart';
 import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:movie_bank_mobile/utils/page_utils.dart';
 
@@ -35,11 +36,11 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff303043),
       bottomNavigationBar: getBottomNavigationBar(CURRENT_PAGE, context),
       body: SafeArea(
         child: Container(
-          margin: EdgeInsets.only(
+          color: Color(0xff303043),
+          padding: EdgeInsets.only(
             left: 15,
             right: 15,
             top: 20,
@@ -99,22 +100,33 @@ class _SearchState extends State<Search> {
                     itemCount: searchResults.length,
                     itemBuilder: (item, index) {
                       Movie movie = searchResults[index];
-                      return ListTile(
-                        leading: CachedNetworkImage(
-                          imageUrl: "$TMDB_WEB_URL/w342${movie.posterPath}",
-                          width: MediaQuery.of(context).size.width * 0.1,
-                          fit: BoxFit.contain,
-                        ),
-                        title: Text(
-                          movie.title,
-                          style: CustomTextStyles.text14(context),
-                        ),
-                        subtitle: Text(
-                          movie.releaseDate,
-                          style: CustomTextStyles.text14(context),
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetail(
+                                movie: movie,
+                              ),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          leading: CachedNetworkImage(
+                            imageUrl: "$TMDB_WEB_URL/w342${movie.posterPath}",
+                            width: MediaQuery.of(context).size.width * 0.1,
+                            fit: BoxFit.contain,
+                          ),
+                          title: Text(
+                            movie.title,
+                            style: CustomTextStyles.text14(context),
+                          ),
+                          subtitle: Text(
+                            movie.releaseDate,
+                            style: CustomTextStyles.text14(context),
+                          ),
                         ),
                       );
-                      return Text(searchResults[index].title);
                     },
                   ),
                 ),
