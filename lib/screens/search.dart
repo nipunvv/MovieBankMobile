@@ -24,6 +24,7 @@ class _SearchState extends State<Search> {
   searchMovies(String keyword) async {
     setState(() {
       isSearching = true;
+      searchResults = [];
     });
     findMovies(keyword).then((movies) {
       setState(() {
@@ -93,44 +94,53 @@ class _SearchState extends State<Search> {
                   ),
                 ],
               ),
-              Container(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: ListView.builder(
-                    itemCount: searchResults.length,
-                    itemBuilder: (item, index) {
-                      Movie movie = searchResults[index];
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MovieDetail(
-                                movie: movie,
+              !isSearching
+                  ? Container(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: ListView.builder(
+                          itemCount: searchResults.length,
+                          itemBuilder: (item, index) {
+                            Movie movie = searchResults[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MovieDetail(
+                                      movie: movie,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ListTile(
+                                leading: CachedNetworkImage(
+                                  imageUrl:
+                                      "$TMDB_WEB_URL/w342${movie.posterPath}",
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  fit: BoxFit.contain,
+                                ),
+                                title: Text(
+                                  movie.title,
+                                  style: CustomTextStyles.text14(context),
+                                ),
+                                subtitle: Text(
+                                  movie.releaseDate,
+                                  style: CustomTextStyles.text14(context),
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                        child: ListTile(
-                          leading: CachedNetworkImage(
-                            imageUrl: "$TMDB_WEB_URL/w342${movie.posterPath}",
-                            width: MediaQuery.of(context).size.width * 0.1,
-                            fit: BoxFit.contain,
-                          ),
-                          title: Text(
-                            movie.title,
-                            style: CustomTextStyles.text14(context),
-                          ),
-                          subtitle: Text(
-                            movie.releaseDate,
-                            style: CustomTextStyles.text14(context),
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ),
+                      ),
+                    )
+                  : Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
             ],
           ),
         ),
