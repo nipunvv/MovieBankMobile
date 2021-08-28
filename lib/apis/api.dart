@@ -63,3 +63,24 @@ Future<List<Movie>> fetchMoviesOfPerson(int personId) async {
     throw Exception('Failed to load movies');
   }
 }
+
+Future<List<Movie>> findMovies(String keyword) async {
+  String url = "${TMDB_API_URL}search/movie?query=$keyword";
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
+  );
+
+  if (response.statusCode == 200) {
+    List<Movie> movies = [];
+    Movie m;
+    for (Map<String, dynamic> movie in jsonDecode(response.body)['results']) {
+      m = Movie.fromJson(movie);
+      if (m.releaseDate != '' && m.posterPath != '') movies.add(m);
+    }
+
+    return movies;
+  } else {
+    throw Exception('Failed to load Movies');
+  }
+}
