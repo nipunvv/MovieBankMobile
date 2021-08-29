@@ -13,56 +13,80 @@ class Favorites extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff303043),
       bottomNavigationBar: getBottomNavigationBar(CURRENT_PAGE, context),
       body: SafeArea(
         child: Container(
-          color: Colors.white,
-          child: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection('favorites').snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              var docs = snapshot.data!.docs;
-
-              return Container(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: ListView.builder(
-                    itemCount: docs.length,
-                    itemBuilder: (item, index) {
-                      return InkWell(
-                        onTap: () {
-                          // TODO: fetch movie and navigate to movie detail page
-                        },
-                        child: ListTile(
-                          leading: CachedNetworkImage(
-                            imageUrl:
-                                "$TMDB_WEB_URL/w342${docs[index]['movie_img']}",
-                            width: MediaQuery.of(context).size.width * 0.1,
-                            fit: BoxFit.contain,
-                          ),
-                          title: Text(
-                            docs[index]['movie_name'],
-                            style: CustomTextStyles.text14(context),
-                          ),
-                          subtitle: Text(
-                            docs[index]['movie_year'],
-                            style: CustomTextStyles.text14(context),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+          color: Color(0xff303043),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  top: 10,
                 ),
-              );
-            },
+                child: Text(
+                  'FAVORITES',
+                  style: CustomTextStyles.text30(context),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  top: 20,
+                ),
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('favorites')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    var docs = snapshot.data!.docs;
+
+                    return Container(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: ListView.builder(
+                          itemCount: docs.length,
+                          itemBuilder: (item, index) {
+                            return InkWell(
+                              onTap: () {
+                                // TODO: fetch movie and navigate to movie detail page
+                              },
+                              child: ListTile(
+                                leading: CachedNetworkImage(
+                                  imageUrl:
+                                      "$TMDB_WEB_URL/w342${docs[index]['movie_img']}",
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  fit: BoxFit.contain,
+                                ),
+                                title: Text(
+                                  docs[index]['movie_name'],
+                                  style: CustomTextStyles.text14(context),
+                                ),
+                                subtitle: Text(
+                                  docs[index]['movie_year'],
+                                  style: CustomTextStyles.text14(context),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
