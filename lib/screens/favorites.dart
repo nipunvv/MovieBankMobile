@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
+import 'package:movie_bank_mobile/screens/movie_detail.dart';
 import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 import 'package:movie_bank_mobile/utils/page_utils.dart';
 
@@ -9,6 +11,19 @@ const CURRENT_PAGE = 2;
 
 class Favorites extends StatelessWidget {
   const Favorites({Key? key}) : super(key: key);
+
+  fetchMovieData(BuildContext context, String movieId) {
+    fetchMovieDetails(movieId).then((movie) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MovieDetail(
+            movie: movie,
+          ),
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +74,10 @@ class Favorites extends StatelessWidget {
                           itemBuilder: (item, index) {
                             return InkWell(
                               onTap: () {
-                                // TODO: fetch movie and navigate to movie detail page
+                                fetchMovieData(
+                                  context,
+                                  docs[index]['movie_id'],
+                                );
                               },
                               child: ListTile(
                                 leading: CachedNetworkImage(
