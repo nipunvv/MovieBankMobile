@@ -1,8 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
@@ -11,7 +9,6 @@ import 'package:movie_bank_mobile/widgets/cast_list.dart';
 import 'package:movie_bank_mobile/widgets/director.dart';
 import 'package:movie_bank_mobile/widgets/genre_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_header.dart';
-import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/widgets/movie_list.dart';
 import 'package:movie_bank_mobile/widgets/movie_meta.dart';
 import 'package:movie_bank_mobile/widgets/pahe_search.dart';
@@ -57,67 +54,6 @@ class _MovieDetailState extends State<MovieDetail> {
       }
     }
     return duration;
-  }
-
-  Future<List<Cast>> fetchCast(movieId) async {
-    String url = "${TMDB_API_URL}movie/$movieId/credits";
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
-    );
-
-    if (response.statusCode == 200) {
-      List<Cast> casts = [];
-      for (Map<String, dynamic> cast in jsonDecode(response.body)['cast']) {
-        Cast c = Cast.fromJson(cast);
-        casts.add(c);
-      }
-
-      for (Map<String, dynamic> cast in jsonDecode(response.body)['crew']) {
-        if (cast['department'] == 'Directing' && cast['job'] == 'Director') {
-          Cast c = Cast.fromJson(cast);
-          casts.add(c);
-        }
-      }
-
-      return casts;
-    } else {
-      throw Exception('Failed to load cast');
-    }
-  }
-
-  Future<Movie> fetchMovieDetails(movieId) async {
-    String url = "${TMDB_API_URL}movie/$movieId";
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
-    );
-
-    if (response.statusCode == 200) {
-      Movie movie = Movie.fromJson(jsonDecode(response.body));
-      return movie;
-    } else {
-      throw Exception('Failed to load cast');
-    }
-  }
-
-  Future<List<Movie>> fetchSimilarMovies(movieId) async {
-    String url = "${TMDB_API_URL}movie/$movieId/similar";
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
-    );
-
-    if (response.statusCode == 200) {
-      List<Movie> movies = [];
-      for (Map<String, dynamic> movie in jsonDecode(response.body)['results']) {
-        movies.add(Movie.fromJson(movie));
-      }
-
-      return movies;
-    } else {
-      throw Exception('Failed to load similar movies');
-    }
   }
 
   changeMovie(Movie newMovie) {

@@ -1,11 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
-import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/providers/provider.dart';
 import 'package:movie_bank_mobile/screens/movie_detail.dart';
 import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
@@ -25,29 +22,6 @@ class _HomeState extends State<Home> {
   late Future<List<Movie>> popularMovies;
   late Future<List<Movie>> latestMovies;
   final double dividerIndent = 10;
-
-  Future<List<Movie>> fetchMovies(String type) async {
-    String url =
-        "${TMDB_API_URL}movie/${type == 'popular' ? 'popular' : 'now_playing'}?language=en-US&page=1";
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
-    );
-
-    if (response.statusCode == 200) {
-      List<Movie> movies = [];
-      Movie m;
-      for (Map<String, dynamic> movie in jsonDecode(response.body)['results']) {
-        movie['category'] = type;
-        m = Movie.fromJson(movie);
-        if (m.releaseDate != '') movies.add(m);
-      }
-
-      return movies;
-    } else {
-      throw Exception('Failed to load Movies');
-    }
-  }
 
   @override
   void initState() {

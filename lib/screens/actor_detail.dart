@@ -1,13 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/actor.dart';
 import 'package:movie_bank_mobile/models/movie.dart';
-import 'package:http/http.dart' as http;
 import 'package:movie_bank_mobile/screens/person_movies.dart';
 import 'package:movie_bank_mobile/utils/custom_text_styles.dart';
 
@@ -33,40 +29,6 @@ class _ActorDetailState extends State<ActorDetail> {
     super.initState();
     actorDetails = fetchActorDetails(widget.actorId);
     movies = fetchMoviesOfActor(widget.actorId);
-  }
-
-  Future<Actor> fetchActorDetails(int actorId) async {
-    String url = "${TMDB_API_URL}person/$actorId";
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
-    );
-
-    if (response.statusCode == 200) {
-      Actor actor = Actor.fromJson(jsonDecode(response.body));
-      return actor;
-    } else {
-      throw Exception('Failed to load actor details');
-    }
-  }
-
-  Future<List<Movie>> fetchMoviesOfActor(int actorId) async {
-    String url = "${TMDB_API_URL}person/$actorId/movie_credits";
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {HttpHeaders.authorizationHeader: "Bearer $TMDB_API_KEY"},
-    );
-
-    if (response.statusCode == 200) {
-      List<Movie> movies = [];
-      for (Map<String, dynamic> movie in jsonDecode(response.body)['cast']) {
-        movies.add(Movie.fromJson(movie));
-      }
-
-      return movies;
-    } else {
-      throw Exception('Failed to load movies');
-    }
   }
 
   String getBioText(String bio) {
