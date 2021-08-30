@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_bank_mobile/apis/api.dart';
 import 'package:movie_bank_mobile/constants.dart';
 import 'package:movie_bank_mobile/models/cast.dart';
@@ -72,21 +73,44 @@ class _MovieDetailState extends State<MovieDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final String assetName = 'assets/icons/favorite.svg';
+    final Widget svgIcon = SvgPicture.asset(
+      assetName,
+      color: Colors.white,
+      semanticsLabel: 'Favorite',
+      width: 40,
+    );
+
     return Scaffold(
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Stack(
           children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Hero(
-                tag: 'movie_image_${currentMovie.category}_${currentMovie.id}',
-                child: CachedNetworkImage(
-                  imageUrl: "$TMDB_WEB_URL/w342${currentMovie.posterPath}",
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.contain,
+            Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Hero(
+                    tag:
+                        'movie_image_${currentMovie.category}_${currentMovie.id}',
+                    child: CachedNetworkImage(
+                      imageUrl: "$TMDB_WEB_URL/w342${currentMovie.posterPath}",
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
-              ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      top: 50,
+                      right: 20,
+                    ),
+                    child: svgIcon,
+                  ),
+                )
+              ],
             ),
             Container(
               margin: EdgeInsets.only(
