@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_bank_mobile/apis/api.dart';
@@ -93,10 +94,24 @@ class _MovieDetailState extends State<MovieDetail> {
                   child: Hero(
                     tag:
                         'movie_image_${currentMovie.category}_${currentMovie.id}',
-                    child: CachedNetworkImage(
-                      imageUrl: "$TMDB_WEB_URL/w342${currentMovie.posterPath}",
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.contain,
+                    child: InkWell(
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "$TMDB_WEB_URL/w342${currentMovie.posterPath}",
+                        width: MediaQuery.of(context).size.width,
+                        fit: BoxFit.contain,
+                      ),
+                      onDoubleTap: () {
+                        var favorite = {
+                          'movie_name': widget.movie.title,
+                          'movie_year': widget.movie.releaseDate,
+                          'movie_img': widget.movie.posterPath,
+                          'movie_id': widget.movie.id,
+                        };
+                        FirebaseFirestore.instance
+                            .collection('favorites')
+                            .add(favorite);
+                      },
                     ),
                   ),
                 ),
