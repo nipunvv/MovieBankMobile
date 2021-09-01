@@ -72,6 +72,16 @@ class _MovieDetailState extends State<MovieDetail> {
     );
   }
 
+  void addMovieAsFavorite() {
+    var favorite = {
+      'movie_name': widget.movie.title,
+      'movie_year': widget.movie.releaseDate,
+      'movie_img': widget.movie.posterPath,
+      'movie_id': widget.movie.id,
+    };
+    FirebaseFirestore.instance.collection('favorites').add(favorite);
+  }
+
   @override
   Widget build(BuildContext context) {
     final String assetName = 'assets/icons/favorite.svg';
@@ -101,17 +111,7 @@ class _MovieDetailState extends State<MovieDetail> {
                         width: MediaQuery.of(context).size.width,
                         fit: BoxFit.contain,
                       ),
-                      onDoubleTap: () {
-                        var favorite = {
-                          'movie_name': widget.movie.title,
-                          'movie_year': widget.movie.releaseDate,
-                          'movie_img': widget.movie.posterPath,
-                          'movie_id': widget.movie.id,
-                        };
-                        FirebaseFirestore.instance
-                            .collection('favorites')
-                            .add(favorite);
-                      },
+                      onDoubleTap: () => addMovieAsFavorite(),
                     ),
                   ),
                 ),
@@ -127,20 +127,23 @@ class _MovieDetailState extends State<MovieDetail> {
                 )
               ],
             ),
-            Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.3),
-              height: MediaQuery.of(context).size.height * 0.4,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                gradient: LinearGradient(
-                  begin: FractionalOffset.topCenter,
-                  end: FractionalOffset.bottomCenter,
-                  colors: [
-                    Colors.grey.withOpacity(0.0),
-                    Color(0xff303043),
-                  ],
-                  stops: [0.0, 1.0],
+            InkWell(
+              onDoubleTap: () => addMovieAsFavorite(),
+              child: Container(
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.3),
+                height: MediaQuery.of(context).size.height * 0.4,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  gradient: LinearGradient(
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                    colors: [
+                      Colors.grey.withOpacity(0.0),
+                      Color(0xff303043),
+                    ],
+                    stops: [0.0, 1.0],
+                  ),
                 ),
               ),
             ),
