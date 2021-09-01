@@ -12,7 +12,7 @@ const CURRENT_PAGE = 2;
 class Favorites extends StatelessWidget {
   const Favorites({Key? key}) : super(key: key);
 
-  fetchMovieData(BuildContext context, String movieId) {
+  fetchMovieData(BuildContext context, num movieId) {
     fetchMovieDetails(movieId).then((movie) {
       Navigator.push(
         context,
